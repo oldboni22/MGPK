@@ -1,6 +1,12 @@
-﻿namespace Repository.TypedRepositories;
+﻿using Entities;
 
-public class FacultyRepository
+namespace Repository.TypedRepositories;
+
+public interface IFacultyRepository
 {
     
+}
+
+public class FacultyRepository(RepositoryContext context) : RepositoryBase<Faculty>(context), IFacultyRepository
+{
 }

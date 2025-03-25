@@ -1,6 +1,13 @@
-﻿namespace Repository.TypedRepositories;
+﻿using Entities;
 
-public class StudentRepository
+namespace Repository.TypedRepositories;
+
+public interface IStudentRepository
+{
+    
+}
+
+public class StudentRepository(RepositoryContext context) : RepositoryBase<Student>(context), IStudentRepository
 {
     
 }

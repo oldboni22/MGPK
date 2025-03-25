@@ -1,6 +1,21 @@
-﻿namespace MGPK.ContextFactories;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Repository;
 
-public class RepositoryContextFactory
+namespace MGPK.ContextFactories;
+
+public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
 {
-    
+    public RepositoryContext CreateDbContext(string[] args)
+    {
+        var cfg = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        var builder = new DbContextOptionsBuilder()
+            .UseSqlServer(cfg.GetConnectionString("sqlConnection"));
+
+        return new RepositoryContext(builder.Options);
+    }
 }
