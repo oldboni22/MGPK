@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository;
+using Service;
 
 namespace MGPK.Extensions;
 
@@ -14,5 +15,10 @@ public static class ServiceCollectionExtensions
     public static void ConfigureRepositoryManager(this IServiceCollection collection)
     {
         collection.AddScoped<IRepositoryManager, RepositoryManager>();
+    }
+
+    public static void ConfigureServiceManager(this IServiceCollection collection)
+    {
+        collection.AddScoped<IServiceManager, ServiceManager>();
     }
 }
