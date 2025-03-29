@@ -11,10 +11,11 @@ public record Student
     
     [Column("student_name")]
     [Required]
-    public string? Name { get; set; }
+    public string? Name { get; init; }
     
     [ForeignKey(nameof(Group))]
     [Column("group_id")]
     public int GroupId { get; init; }
-    public Group? Group { get; init; }
+
+    public Group Group { get; set; } = new();
 }

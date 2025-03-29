@@ -13,22 +13,16 @@ public interface IRepositoryManager
     void Save();
 } 
 
-public sealed class RepositoryManager : IRepositoryManager
+public sealed class RepositoryManager(RepositoryContext context) : IRepositoryManager
 {
-    private readonly Lazy<FacultyRepository> _faculty;
-    private readonly Lazy<GroupRepository> _group;
-    private readonly Lazy<StudentRepository> _student;
-
-    private readonly RepositoryContext _context;
+    private readonly Lazy<FacultyRepository> _faculty = new(() => 
+        new FacultyRepository(context));
     
-    public RepositoryManager(RepositoryContext context)
-    {
-        _faculty = new Lazy<FacultyRepository>(() => new FacultyRepository(context));
-        _group = new Lazy<GroupRepository>(()=> new GroupRepository(context));
-        _student = new Lazy<StudentRepository>( ()=> new StudentRepository(context));
-
-        _context = context;
-    }
+    private readonly Lazy<GroupRepository> _group = new(()=> 
+        new GroupRepository(context));
+    
+    private readonly Lazy<StudentRepository> _student = new( ()=> 
+        new StudentRepository(context));
 
 
     public IFacultyRepository Faculty => _faculty.Value;
@@ -37,7 +31,7 @@ public sealed class RepositoryManager : IRepositoryManager
   
     public void Save()
     {
-        _context.SaveChanges();
+        context.SaveChanges();
     }
 
     

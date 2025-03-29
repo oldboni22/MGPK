@@ -15,7 +15,7 @@ public class FacultyController(IServiceManager serviceManager) : ControllerBase
     {
         try
         {
-            var result = _serviceManager.Faculty.FindAll(trackChanges);
+            var result = _serviceManager.Faculty.GetAllFaculties(trackChanges);
             return Ok(result);
         }
         catch (Exception e)

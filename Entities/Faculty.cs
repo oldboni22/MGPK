@@ -12,6 +12,6 @@ public record Faculty
     [Column("faculty_name")]
     [Required]
     public string? Name { get; init; }
-    
-    public IEnumerable<Group>? Groups { get; set; }
+
+    public IEnumerable<Group> Groups { get; set; } = [];
 }

@@ -16,7 +16,8 @@ public record Group
     [ForeignKey(nameof(Faculty))]
     [Column("faculty_id")]
     public int FacultyId { get; init; }
-    public Faculty? Faculty { get; init; }
-    
-    public IEnumerable<Student>? Students { get; set; }
+
+    public Faculty Faculty { get; init; } = new();
+
+    public IEnumerable<Student> Students { get; set; } = [];
 }
