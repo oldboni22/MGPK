@@ -9,9 +9,9 @@ public interface IStudentService
     
 }
 
-public class StudentService (IRepositoryManager repositoryManager, ILogger logger,IMapper mapper) : IStudentService
+public class StudentService (IRepositoryManager repositoryManager, IMapper mapper, ILogger<StudentService> logger) : IStudentService
 {
     private readonly IRepositoryManager _repositoryManager = repositoryManager;
-    private readonly ILogger _logger = logger;
     private readonly IMapper _mapper = mapper;
+    private readonly ILogger<StudentService> _logger = logger;
 }

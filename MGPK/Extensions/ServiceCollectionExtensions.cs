@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository;
+using Serilog;
 using Service;
 
 namespace MGPK.Extensions;
@@ -21,4 +22,5 @@ public static class ServiceCollectionExtensions
     {
         collection.AddScoped<IServiceManager, ServiceManager>();
     }
+    
 }

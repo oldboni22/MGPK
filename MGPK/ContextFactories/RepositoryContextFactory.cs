@@ -14,7 +14,8 @@ public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryCo
             .Build();
 
         var builder = new DbContextOptionsBuilder()
-            .UseSqlServer(cfg.GetConnectionString("sqlConnection"));
+            .UseSqlServer(cfg.GetConnectionString("sqlConnection")
+                ,b => b.MigrationsAssembly("MGPK"));
 
         return new RepositoryContext(builder.Options);
     }

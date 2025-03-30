@@ -10,11 +10,11 @@ public interface IFacultyService
     IEnumerable<FacultyDto> GetAllFaculties(bool trackChanges);
 }
 
-public class FacultyService (IRepositoryManager repositoryManager, ILogger logger,IMapper mapper) : IFacultyService
+public class FacultyService (IRepositoryManager repositoryManager, IMapper mapper,ILogger<FacultyService> logger) : IFacultyService
 {
-    private readonly IRepositoryManager _repositoryManager = repositoryManager;
-    private readonly ILogger _logger = logger;
+    private readonly IRepositoryManager _repositoryManager = repositoryManager; 
     private readonly IMapper _mapper = mapper;
+    private readonly ILogger<FacultyService> _logger = logger;
     
     public IEnumerable<FacultyDto> GetAllFaculties(bool trackChanges)
     {
@@ -23,12 +23,10 @@ public class FacultyService (IRepositoryManager repositoryManager, ILogger logge
             var faculties = _repositoryManager.Faculty.FindAll(trackChanges);
             var facultiesDto = _mapper.Map<IEnumerable<FacultyDto>>(faculties);
             
-            _logger.LogInformation("Successfully fetched faculties!");
             return facultiesDto;
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"An exception occured while fetching faculties!");
             throw;
         }
     }
