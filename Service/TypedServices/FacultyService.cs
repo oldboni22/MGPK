@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities;
+using Entities.Exceptions.NotFound;
 using Microsoft.Extensions.Logging;
 using Repository;
 using Shared.DTO;
@@ -28,13 +29,13 @@ public class FacultyService (IRepositoryManager repositoryManager, IMapper mappe
     public FacultyDto? GetFaculty(int id, bool trackChanges)
     {
         var faculty = _repositoryManager.Faculty.GetFaculty(id, trackChanges);
-        if (faculty != null)
+        if (faculty == null)
         {
-            var dto = _mapper.Map<FacultyDto>(faculty);
-            return dto;
+            throw new FacultyNotFoundException(id);
         }
 
-        return null;
+        var dto = _mapper.Map<FacultyDto>(faculty);
+        return dto;
     }
 
 

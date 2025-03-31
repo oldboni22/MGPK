@@ -5,7 +5,7 @@ using Service;
 namespace MGPK.ApiControllers;
 
 
-[Route("api/Faculty")]
+[Route("api/Faculties")]
 [ApiController]
 public class FacultyController(IServiceManager serviceManager) : ControllerBase
 {

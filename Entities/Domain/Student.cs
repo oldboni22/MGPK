@@ -16,6 +16,12 @@ public record Student
     [ForeignKey(nameof(Group))]
     [Column("group_id")]
     public int GroupId { get; init; }
-
     public Group Group { get; set; } = new();
+    
+    [ForeignKey(nameof(Faculty))]
+    [Column("faculty_id")]
+    public int FacultyId { get; init; }
+
+    public Faculty Faculty { get; set; } = new();
+
 }

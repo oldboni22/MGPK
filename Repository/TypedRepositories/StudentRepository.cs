@@ -4,19 +4,21 @@ namespace Repository.TypedRepositories;
 
 public interface IStudentRepository
 {
-    IEnumerable<Student> GetStudents(bool trackChanges);
-    Student? GetStudent(int id, bool trackChanges);
+    IEnumerable<Student> GetStudents(int facultyId,int groupId,bool trackChanges);
+    Student? GetStudent(int faculty,int groupId ,int id, bool trackChanges);
 }
 
 public class StudentRepository(RepositoryContext context) : RepositoryBase<Student>(context), IStudentRepository
 {
-    public IEnumerable<Student> GetStudents(bool trackChanges) =>
-        FindAll(trackChanges)
+    public IEnumerable<Student> GetStudents(int facultyId,int groupId,bool trackChanges) =>
+        FindByCondition(stud => stud.FacultyId == facultyId && stud.GroupId == groupId,trackChanges)
             .OrderBy(stud => stud.Name)
             .ToList();
 
-    public Student? GetStudent(int id, bool trackChanges) =>
-        FindByCondition(stud => stud.Id == id, trackChanges)
+    public Student? GetStudent(int facultyId,int groupId,int id, bool trackChanges) =>
+        FindByCondition(stud => stud.FacultyId == facultyId 
+                                && stud.GroupId == groupId 
+                                && stud.Id == id , trackChanges)
             .SingleOrDefault();
 
 }

@@ -3,7 +3,7 @@ using Service;
 
 namespace MGPK.ApiControllers;
 
-[Route("api/Students")]
+[Route("api/Faculties/{facultyId}/Groups/{groupId}/Students")]
 [ApiController]
 public class StudentController(IServiceManager serviceManager) : ControllerBase
 {
@@ -11,17 +11,17 @@ public class StudentController(IServiceManager serviceManager) : ControllerBase
 
 
     [HttpGet]
-    public IActionResult GetStudents()
+    public IActionResult GetStudents(int facultyId,int groupId)
     {
-        var students = _serviceManager.Student.GetStudents(false);
+        var students = _serviceManager.Student.GetStudents(facultyId,groupId,false);
 
         return Ok(students);
     }
 
     [HttpGet("{id:int}")]
-    public IActionResult GetStudent(int id)
+    public IActionResult GetStudent(int facultyId,int groupId,int id)
     {
-        var student = _serviceManager.Student.GetStudent(id, false);
+        var student = _serviceManager.Student.GetStudent(facultyId,groupId,id, false);
         
         return Ok(student);
     }

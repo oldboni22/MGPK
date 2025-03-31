@@ -1,5 +1,6 @@
 using System.Net;
 using Entities;
+using Entities.Exceptions.NotFound;
 using Microsoft.AspNetCore.Diagnostics;
 using Serilog;
 
@@ -15,10 +16,16 @@ public static class ExceptionMiddlewareExtensions
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
+                        context.Response.StatusCode = contextFeature.Error switch
+                        {
+                            NotFoundException => StatusCodes.Status404NotFound,
+                            _ => StatusCodes.Status500InternalServerError
+                        };
+                        
                         var details = new ErrorDetails
                         {
-                            StatusCode = (int)HttpStatusCode.InternalServerError,
-                            Message = "Internal server error"
+                            StatusCode = context.Response.StatusCode,
+                            Message = contextFeature.Error.Message
                         };
                         
                         Log.Logger.Error(details.ToString());
