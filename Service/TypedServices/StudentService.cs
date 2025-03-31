@@ -2,16 +2,15 @@
 using Microsoft.Extensions.Logging;
 using Repository;
 
-namespace Service;
+namespace Service.TypedServices;
 
 public interface IStudentService
 {
     
 }
 
-public class StudentService (IRepositoryManager repositoryManager, IMapper mapper, ILogger<StudentService> logger) : IStudentService
+public class StudentService (IRepositoryManager repositoryManager, IMapper mapper) : IStudentService
 {
     private readonly IRepositoryManager _repositoryManager = repositoryManager;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<StudentService> _logger = logger;
 }

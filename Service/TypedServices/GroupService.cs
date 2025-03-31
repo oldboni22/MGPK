@@ -2,16 +2,15 @@
 using Microsoft.Extensions.Logging;
 using Repository;
 
-namespace Service;
+namespace Service.TypedServices;
 
 public interface IGroupService
 {
     
 }
 
-public class GroupService (IRepositoryManager repositoryManager, IMapper mapper, ILogger<GroupService> logger) : IGroupService
+public class GroupService (IRepositoryManager repositoryManager, IMapper mapper) : IGroupService
 {
     private readonly IRepositoryManager _repositoryManager = repositoryManager;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<GroupService> _logger = logger;
 }

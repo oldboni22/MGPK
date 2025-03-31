@@ -19,6 +19,7 @@ builder.Services.ConfigureServiceManager();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+app.ConfigureExceptionHandling();
 
 app.UseSwagger();
 app.UseSwaggerUI();

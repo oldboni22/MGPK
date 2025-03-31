@@ -3,6 +3,7 @@ using AutoMapper;
 using Entities;
 using Microsoft.Extensions.Logging;
 using Repository;
+using Service.TypedServices;
 
 namespace Service;
 
@@ -14,19 +15,16 @@ public interface IServiceManager
     IStudentService Student { get; }
 }
 
-public class ServiceManager(IRepositoryManager repositoryManager,IMapper mapper
-    ,ILogger<FacultyService> facultyLogger
-    ,ILogger<GroupService> groupLogger
-    ,ILogger<StudentService> studentLogger) : IServiceManager
+public class ServiceManager(IRepositoryManager repositoryManager,IMapper mapper) : IServiceManager
 {
     private readonly Lazy<IFacultyService> _faculty = new Lazy<IFacultyService>(() =>
-        new FacultyService(repositoryManager,mapper,facultyLogger));
+        new FacultyService(repositoryManager,mapper));
     
     private readonly Lazy<IGroupService> _group = new Lazy<IGroupService>(() => 
-        new GroupService(repositoryManager,mapper,groupLogger));
+        new GroupService(repositoryManager,mapper));
     
     private readonly Lazy<IStudentService> _student = new Lazy<IStudentService>(()=> 
-        new StudentService(repositoryManager,mapper,studentLogger));
+        new StudentService(repositoryManager,mapper));
 
     public IFacultyService Faculty => _faculty.Value;
     public IGroupService Group => _group.Value;
