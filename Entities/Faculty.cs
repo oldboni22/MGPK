@@ -7,7 +7,7 @@ public record Faculty
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("faculty_id")]
-    public int FacultyId { get; init; }
+    public int Id { get; init; }
     
     [Column("faculty_name")]
     [Required]

@@ -11,7 +11,7 @@ public record Group
     
     [Column("group_name")]
     [Required]
-    public string? GroupName { get; init; }
+    public string? Name { get; init; }
 
     [ForeignKey(nameof(Faculty))]
     [Column("faculty_id")]

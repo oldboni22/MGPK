@@ -4,16 +4,20 @@ namespace Repository.TypedRepositories;
 
 public interface IFacultyRepository
 {
-    IEnumerable<Faculty> FindAll(bool trackChanges);
+    IEnumerable<Faculty> GetAllFaculties(bool trackChanges);
+    Faculty? GetFaculty(int id, bool trackChanges);
 }
 
 public class FacultyRepository(RepositoryContext context) : RepositoryBase<Faculty>(context), IFacultyRepository
 {
-    public IEnumerable<Faculty> FindAll(bool trackChanges) => 
+    public IEnumerable<Faculty> GetAllFaculties(bool trackChanges) => 
         FindAll(trackChanges)
-            .OrderBy(_ => _.Name)
+            .OrderBy(faculty => faculty.Name)
             .ToList();
 
+    public Faculty? GetFaculty(int id, bool trackChanges) =>
+        FindByCondition(f => f.Id == id,trackChanges)
+            .SingleOrDefault();
 
 
 }
