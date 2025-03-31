@@ -3,11 +3,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((_, config) => config
-        .WriteTo.Console()
-        .WriteTo.File("logs/.log"));
+builder.ConfigureSerilog();
 
-builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAutoMapper(typeof(Program));

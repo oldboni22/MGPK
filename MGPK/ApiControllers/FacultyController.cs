@@ -6,14 +6,22 @@ namespace MGPK.ApiControllers;
 
 
 [Route("api/Faculty")]
+[ApiController]
 public class FacultyController(IServiceManager serviceManager) : ControllerBase
 {
     private readonly IServiceManager _serviceManager = serviceManager;
 
     [HttpGet]
-    public IActionResult FindFaculties(bool trackChanges)
+    public IActionResult GetFaculties()
     {
-            var result = _serviceManager.Faculty.GetAllFaculties(trackChanges);
+            var result = _serviceManager.Faculty.GetAllFaculties(false);
             return Ok(result);
+    }
+
+    [HttpGet("{id:int}")]
+    public IActionResult GetFaculty(int id)
+    {
+        var faculty = _serviceManager.Faculty.GetFaculty(id,false);
+        return Ok(faculty);
     }
 }

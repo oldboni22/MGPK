@@ -21,12 +21,18 @@ public static class ExceptionMiddlewareExtensions
                             Message = "Internal server error"
                         };
                         
-                        var logger = Log.Logger;
-                        logger.Error(details.ToString());
+                        Log.Logger.Error(details.ToString());
                         
                         await context.Response.WriteAsync(details.ToString());
                     }
                 })
             );
+    }
+
+    public static void ConfigureSerilog(this WebApplicationBuilder builder)
+    {
+        builder.Host.UseSerilog((_, config) => config
+            .WriteTo.Console()
+            .WriteTo.File("logs/.log"));
     }
 }
