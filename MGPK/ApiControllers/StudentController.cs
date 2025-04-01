@@ -25,5 +25,12 @@ public class StudentController(IServiceManager serviceManager) : ControllerBase
         
         return Ok(student);
     }
+
+    [HttpDelete("{id:int}")]
+    public IActionResult DeleteStudent(int facultyId,int groupId,int id)
+    {   
+        _serviceManager.Student.DeleteStudentForGroup(facultyId,groupId,id,false);
+        return NoContent();
+    }
     
 }

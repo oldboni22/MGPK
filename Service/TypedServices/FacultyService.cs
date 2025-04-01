@@ -15,6 +15,7 @@ public interface IFacultyService
     FacultyDto? GetFaculty(int id,bool trackChanges);
     FacultyDto CreateFaculty(FacultyCreationDto faculty);
     (IEnumerable<FacultyDto> faculties,string ids) CreateFaculties(IEnumerable<FacultyCreationDto> faculties);
+    
 }
 
 public class FacultyService (IRepositoryManager repositoryManager, IMapper mapper) : IFacultyService

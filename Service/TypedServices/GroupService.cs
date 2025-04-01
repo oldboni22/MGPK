@@ -10,8 +10,9 @@ namespace Service.TypedServices;
 public interface IGroupService
 {
     IEnumerable<GroupDto> GetGroups(int facultyId,bool trackChanges);
-    GroupDto? GetGroup(int facultyId,int id, bool trackChange);
+    GroupDto? GetGroup(int facultyId,int id, bool trackChanges);
     GroupDto CreateGroupForFaculty(int facultyId, GroupCreationDto group);
+    void DeleteGroupForFaculty(int facultyId, int id, bool trackChanges);
 }
 
 public class GroupService(IRepositoryManager repositoryManager, IMapper mapper) : IGroupService
@@ -32,7 +33,7 @@ public class GroupService(IRepositoryManager repositoryManager, IMapper mapper) 
         return groupsDto;
     }
 
-    public GroupDto? GetGroup(int facultyId, int id, bool trackChange)
+    public GroupDto? GetGroup(int facultyId, int id, bool trackChanges)
     {
         var faculty = _repositoryManager.Faculty.GetFaculty(facultyId, false);
         if (faculty == null)
@@ -40,7 +41,7 @@ public class GroupService(IRepositoryManager repositoryManager, IMapper mapper) 
             throw new FacultyNotFoundException(facultyId);
         }
 
-        var group = _repositoryManager.Group.GetGroup(facultyId, id, trackChange);
+        var group = _repositoryManager.Group.GetGroup(facultyId, id, trackChanges);
         if (group == null)
         {
             throw new GroupNotFoundException(id);
@@ -58,5 +59,23 @@ public class GroupService(IRepositoryManager repositoryManager, IMapper mapper) 
         _repositoryManager.Save();
 
         return _mapper.Map<GroupDto>(entity);
+    }
+
+    public void DeleteGroupForFaculty(int facultyId, int id, bool trackChanges)
+    {
+        var faculty = _repositoryManager.Faculty.GetFaculty(facultyId, false);
+        if (faculty == null)
+        {
+            throw new FacultyNotFoundException(facultyId);
+        }
+
+        var group = _repositoryManager.Group.GetGroup(facultyId, id, trackChanges);
+        if (group == null)
+        {
+            throw new GroupNotFoundException(id);
+        }
+        
+        _repositoryManager.Group.DeleteGroup(group);
+        _repositoryManager.Save();
     }
 }

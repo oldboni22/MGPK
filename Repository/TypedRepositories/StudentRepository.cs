@@ -6,6 +6,7 @@ public interface IStudentRepository
 {
     IEnumerable<Student> GetStudents(int facultyId,int groupId,bool trackChanges);
     Student? GetStudent(int faculty,int groupId ,int id, bool trackChanges);
+    void DeleteStudent(Student student);
 }
 
 public class StudentRepository(RepositoryContext context) : RepositoryBase<Student>(context), IStudentRepository
@@ -21,4 +22,5 @@ public class StudentRepository(RepositoryContext context) : RepositoryBase<Stude
                                 && stud.Id == id , trackChanges)
             .SingleOrDefault();
 
+    public void DeleteStudent(Student student) => Delete(student);
 }

@@ -35,4 +35,11 @@ public class GroupController(IServiceManager serviceManager) : ControllerBase
             new { facultyId, id = result.Id },
             result);
     }
+
+    [HttpDelete("{id:int}")]
+    public IActionResult DeleteGroup(int facultyId, int id)
+    {
+        _serviceManager.Group.DeleteGroupForFaculty(facultyId,id,false);
+        return NoContent();
+    }
 }

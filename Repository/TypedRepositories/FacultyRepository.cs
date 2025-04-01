@@ -8,6 +8,7 @@ public interface IFacultyRepository
     IEnumerable<Faculty> GetFacultiesByIds(IEnumerable<int> ids, bool trackChanges);
     Faculty? GetFaculty(int id, bool trackChanges);
     void CreateFaculty(Faculty faculty);
+    void DeleteFaculty(Faculty faculty);
 }
 
 public class FacultyRepository(RepositoryContext context) : RepositoryBase<Faculty>(context), IFacultyRepository
@@ -31,4 +32,6 @@ public class FacultyRepository(RepositoryContext context) : RepositoryBase<Facul
     {
         Create(faculty);
     }
+
+    public void DeleteFaculty(Faculty faculty) => Delete(faculty);
 }
