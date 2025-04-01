@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using Shared.DTO;
 
 namespace MGPK.ApiControllers;
 
@@ -16,10 +17,22 @@ public class GroupController(IServiceManager serviceManager) : ControllerBase
         return Ok(groups);
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}",Name = "GetGroupById")]
     public IActionResult GetGroup(int facultyId,int id)
     {
         var group = _serviceManager.Group.GetGroup(facultyId, id, false);
         return Ok(group);
+    }
+
+    [HttpPost]
+    public IActionResult CreateService(int facultyId,[FromBody] GroupCreationDto? group)
+    {
+        if (group == null)
+            return BadRequest("Group creation dto object is null\"");
+
+        var result = _serviceManager.Group.CreateGroupForFaculty(facultyId, group);
+        return CreatedAtRoute("GetGroupById",
+            new { facultyId, id = result.Id },
+            result);
     }
 }

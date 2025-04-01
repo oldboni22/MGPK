@@ -11,6 +11,7 @@ public interface IGroupService
 {
     IEnumerable<GroupDto> GetGroups(int facultyId,bool trackChanges);
     GroupDto? GetGroup(int facultyId,int id, bool trackChange);
+    GroupDto CreateGroupForFaculty(int facultyId, GroupCreationDto group);
 }
 
 public class GroupService(IRepositoryManager repositoryManager, IMapper mapper) : IGroupService
@@ -47,5 +48,15 @@ public class GroupService(IRepositoryManager repositoryManager, IMapper mapper) 
 
         var dto = _mapper.Map<GroupDto>(group);
         return dto;
+    }
+
+    public GroupDto CreateGroupForFaculty(int facultyId, GroupCreationDto group)
+    {
+        var entity = _mapper.Map<Group>(group);
+
+        _repositoryManager.Group.CreateGroupForFaculty(facultyId, entity);
+        _repositoryManager.Save();
+
+        return _mapper.Map<GroupDto>(entity);
     }
 }

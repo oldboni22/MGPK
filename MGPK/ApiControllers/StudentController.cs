@@ -18,7 +18,7 @@ public class StudentController(IServiceManager serviceManager) : ControllerBase
         return Ok(students);
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}",Name = "GetStudentById")]
     public IActionResult GetStudent(int facultyId,int groupId,int id)
     {
         var student = _serviceManager.Student.GetStudent(facultyId,groupId,id, false);

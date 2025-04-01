@@ -10,7 +10,10 @@ public class MappingProfile : Profile
     {
         CreateMap<Faculty, FacultyDto>();
         CreateMap<Group, GroupDto>();
-        
         CreateMap<Student,StudentDto>();
+
+        CreateMap<FacultyCreationDto, Faculty>();
+        CreateMap<GroupCreationDto, Group>();
+        CreateMap<StudentCreationDto, Student>();
     }
 }

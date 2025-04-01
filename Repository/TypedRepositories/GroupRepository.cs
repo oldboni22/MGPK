@@ -7,6 +7,7 @@ public interface IGroupRepository
 {
     IEnumerable<Group> GetGroups(int facultyId,bool trackChanges);
     Group? GetGroup(int facultyId,int id, bool trackChanges);
+    void CreateGroupForFaculty(int facultyId, Group group);
 }
 
 public class GroupRepository(RepositoryContext context) : RepositoryBase<Group>(context), IGroupRepository
@@ -19,8 +20,10 @@ public class GroupRepository(RepositoryContext context) : RepositoryBase<Group>(
     public Group? GetGroup(int facultyId,int id, bool trackChanges) =>
         FindByCondition(group => group.Id == id && group.FacultyId == facultyId, trackChanges)
             .SingleOrDefault();
-    
-    public Group? GetGroup(int id, bool trackChanges) =>
-        FindByCondition(group => group.Id == id, trackChanges)
-            .SingleOrDefault();
+
+    public void CreateGroupForFaculty(int facultyId, Group group)
+    {
+        var newGroup = group with { FacultyId = facultyId };
+        Create(newGroup);
+    }
 }
